@@ -1,7 +1,7 @@
 # Copyright 2026 Humanilog GmbH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 
 
 class CreditControlPolicy(models.Model):
@@ -46,20 +46,6 @@ class CreditControlPolicy(models.Model):
 
     def check_policy_against_account(self, account):
         """Also accept policies that apply to all receivable accounts."""
-        domain = [("account_ids", "in", account.ids), ("do_nothing", "=", True)]
-        if account.internal_type == "receivable":
-            domain.append(("all_receivable_accounts", "=", True))
-        domain = ["|"] * (len(domain) - 1) + domain
-        allowed = self.search(domain)
-        if self not in allowed:
-            allowed_names = "\n".join(x.name for x in allowed)
-            raise UserError(
-                _(
-                    "You can only use a policy set on "
-                    "account %s.\n"
-                    "Please choose one of the following "
-                    "policies:\n %s"
-                )
-                % (account.name, allowed_names)
-            )
-        return True
+        if self.all_receivable_accounts and account.internal_type == "receivable":
+            return True
+        return super().check_policy_against_account(account)

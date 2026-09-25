@@ -39,15 +39,3 @@ msgid ""
 msgstr ""
 "Regel '%s': Bitte mindestens ein Konto auswählen oder 'Alle Forderungen-"
 "Konten einbeziehen' aktivieren."
-
-#. module: account_credit_control_all_receivable
-#: code:addons/account_credit_control_all_receivable/models/credit_control_policy.py:0
-#, python-format
-msgid ""
-"You can only use a policy set on account %s.\n"
-"Please choose one of the following policies:\n"
-" %s"
-msgstr ""
-"Sie können nur eine Regel verwenden, die für das Konto %s hinterlegt ist.\n"
-"Bitte wählen Sie eine der folgenden Regeln:\n"
-" %s"

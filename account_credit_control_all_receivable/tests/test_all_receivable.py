@@ -1,7 +1,7 @@
 # Copyright 2026 Humanilog GmbH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import Form
 
@@ -99,6 +99,28 @@ class TestAllReceivable(AccountTestInvoicingCommon):
         with self.assertRaises(ValidationError):
             self.policy.all_receivable_accounts = False
 
+    def test_partner_policy_not_allowed_without_flag(self):
+        self.policy.write(
+            {
+                "all_receivable_accounts": False,
+                "account_ids": [(6, 0, self.debtor_2.ids)],
+            }
+        )
+        with self.assertRaises(ValidationError):
+            self.partner_1.credit_policy_id = self.policy
+
+    def test_non_receivable_account_not_allowed(self):
+        payable = self.company_data["default_account_payable"]
+        with self.assertRaises(UserError):
+            self.policy.check_policy_against_account(payable)
+
     def test_form_view(self):
+        self.policy.write(
+            {
+                "all_receivable_accounts": False,
+                "account_ids": [(6, 0, self.debtor_1.ids)],
+            }
+        )
         with Form(self.policy) as form:
             form.all_receivable_accounts = True
+        self.assertTrue(self.policy.all_receivable_accounts)

@@ -67,7 +67,10 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Humanilog GmbH <https://humanilog.org>
+* `Humanilog GmbH <https://humanilog.org>`_:
+
+  * Hannes Hegewald <h.hegewald@humanilog.org>
+  * Laya Rabasa <lrabasa@elegosoft.com>
 
 Maintainers
 ~~~~~~~~~~~

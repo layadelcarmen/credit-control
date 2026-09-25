@@ -11,5 +11,6 @@
     "website": "https://github.com/OCA/credit-control",
     "depends": ["account_credit_control"],
     "data": ["views/credit_control_policy.xml"],
+    "development_status": "Beta",
     "installable": True,
 }
